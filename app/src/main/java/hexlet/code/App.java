@@ -22,9 +22,9 @@ public class App implements Callable<Integer> {
 
     @Override
     public Integer call() throws Exception {
-        System.out.println("processing...");
-        var m = Differ.parseJson(filepath1);
-        System.out.println(m.toString());
+        System.out.println(
+                Differ.generate(filepath1, filepath2)
+        );
         return 0;
     }
 
