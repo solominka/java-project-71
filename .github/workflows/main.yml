@@ -19,6 +19,7 @@ jobs:
           gradle-version: 8.7
           build-root-directory: app
       - run: cd app
+      - run: gradle wrapper
       - run: ./gradlew checkstyleMain
       - run: ./gradlew build
       - run: ./gradlew test
