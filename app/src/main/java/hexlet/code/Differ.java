@@ -1,19 +1,15 @@
 package hexlet.code;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import hexlet.code.model.CompareResult;
 import hexlet.code.model.DiffEntry;
 
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
 public class Differ {
-    private static final ObjectMapper mapper = new ObjectMapper();
-
     public static String generate(Path filepath1, Path filepath2) throws Exception {
-        var map1 = parseJson(filepath1);
-        var map2 = parseJson(filepath2);
+        var map1 = Parser.parse(filepath1);
+        var map2 = Parser.parse(filepath2);
 
         Set<String> allKeys = new LinkedHashSet<>(map1.keySet());
         allKeys.addAll(map2.keySet());
@@ -25,16 +21,11 @@ public class Differ {
         return buildStringResponse(results);
     }
 
-    private static Map<String, String> parseJson(Path filepath) throws Exception {
-        String jsonSource = Files.readString(filepath);
-        return mapper.readValue(jsonSource, Map.class);
-    }
-
     private static List<DiffEntry> processKey(String key, Map map1, Map map2) {
         var v1 = map1.getOrDefault(key, null);
         var v2 = map2.getOrDefault(key, null);
-        if (v1 != null) {
-            if (v2 != null) {
+        if (map1.containsKey(key)) {
+            if (map2.containsKey(key)) {
                 if (Objects.equals(v1, v2)) {
                     return List.of(new DiffEntry(key, v1, CompareResult.EQUALS));
                 } else {
