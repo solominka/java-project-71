@@ -4,33 +4,36 @@ import hexlet.code.model.DiffEntry;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.StringJoiner;
 
 public class PlainFormatter {
     public static String format(List<DiffEntry> results) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (var r : results) {
-            String result = switch (r.getCompareResult()) {
-                case EQUALS -> "";
-                case ADDED -> formatAddedDiffEntry(r);
-                case REMOVED -> formatRemovedDiffEntry(r);
-                case UPDATED -> formatUpdatedDiffEntry(r);
-            };
-            stringBuilder.append(result);
-        }
-        return stringBuilder.toString();
+        StringJoiner joiner = new StringJoiner("\n");
+        results
+                .stream()
+                .map(r -> switch (r.getCompareResult()) {
+                    case EQUALS -> null;
+                    case ADDED -> formatAddedDiffEntry(r);
+                    case REMOVED -> formatRemovedDiffEntry(r);
+                    case UPDATED -> formatUpdatedDiffEntry(r);
+                })
+                .filter(Objects::nonNull)
+                .forEach(joiner::add);
+        return joiner.toString();
     }
 
     private static String formatUpdatedDiffEntry(DiffEntry d) {
-        return String.format("Property '%s' was updated. From %s to %s\n", d.getKey(),
+        return String.format("Property '%s' was updated. From %s to %s", d.getKey(),
                 formatValue(d.getOldValue()), formatValue(d.getValue()));
     }
 
     private static String formatAddedDiffEntry(DiffEntry d) {
-        return String.format("Property '%s' was added with value: %s\n", d.getKey(), formatValue(d.getValue()));
+        return String.format("Property '%s' was added with value: %s", d.getKey(), formatValue(d.getValue()));
     }
 
     private static String formatRemovedDiffEntry(DiffEntry d) {
-        return String.format("Property '%s' was removed\n", d.getKey());
+        return String.format("Property '%s' was removed", d.getKey());
     }
 
     private static String formatValue(Object v) {
