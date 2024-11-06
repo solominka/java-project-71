@@ -11,9 +11,9 @@ class DifferTest {
     void shouldGenerateDiffForJsonFiles() throws Exception {
         ClassLoader classLoader = getClass().getClassLoader();
         var resp = Differ.generate(
-                Path.of(classLoader.getResource("input/json/file1.json").getPath()),
-                Path.of(classLoader.getResource("input/json/file2.json").getPath()),
-                Format.STYLISH
+                classLoader.getResource("input/json/file1.json").getPath(),
+                classLoader.getResource("input/json/file2.json").getPath(),
+                "stylish"
         );
         var correct = Files.readString(Path.of(classLoader.getResource("output/stylish_correct.txt").getPath()));
         Assertions.assertEquals(correct, resp);
@@ -23,9 +23,9 @@ class DifferTest {
     void shouldGenerateDiffForYamlFiles() throws Exception {
         ClassLoader classLoader = getClass().getClassLoader();
         var resp = Differ.generate(
-                Path.of(classLoader.getResource("input/yaml/file1.yml").getPath()),
-                Path.of(classLoader.getResource("input/yaml/file2.yml").getPath()),
-                Format.STYLISH
+                classLoader.getResource("input/yaml/file1.yml").getPath(),
+                classLoader.getResource("input/yaml/file2.yml").getPath(),
+                "stylish"
         );
         var correct = Files.readString(Path.of(classLoader.getResource("output/stylish_correct.txt").getPath()));
         Assertions.assertEquals(correct, resp);
@@ -35,9 +35,9 @@ class DifferTest {
     void shouldGeneratePlainDiff() throws Exception {
         ClassLoader classLoader = getClass().getClassLoader();
         var resp = Differ.generate(
-                Path.of(classLoader.getResource("input/yaml/file1.yml").getPath()),
-                Path.of(classLoader.getResource("input/yaml/file2.yml").getPath()),
-                Format.PLAIN
+                classLoader.getResource("input/yaml/file1.yml").getPath(),
+                classLoader.getResource("input/yaml/file2.yml").getPath(),
+                "plain"
         );
         var correct = Files.readString(Path.of(classLoader.getResource("output/plain_correct.txt").getPath()));
         Assertions.assertEquals(correct, resp);
@@ -47,9 +47,9 @@ class DifferTest {
     void shouldGenerateJsonDiff() throws Exception {
         ClassLoader classLoader = getClass().getClassLoader();
         var resp = Differ.generate(
-                Path.of(classLoader.getResource("input/yaml/file1.yml").getPath()),
-                Path.of(classLoader.getResource("input/yaml/file2.yml").getPath()),
-                Format.JSON
+                classLoader.getResource("input/yaml/file1.yml").getPath(),
+                classLoader.getResource("input/yaml/file2.yml").getPath(),
+                "json"
         );
         var correct = Files.readString(Path.of(classLoader.getResource("output/json_correct.json").getPath()));
         Assertions.assertEquals(correct, resp);

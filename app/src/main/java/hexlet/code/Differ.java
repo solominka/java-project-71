@@ -7,6 +7,7 @@ import hexlet.code.model.CompareResult;
 import hexlet.code.model.DiffEntry;
 
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -15,9 +16,17 @@ import java.util.Objects;
 import java.util.Set;
 
 public class Differ {
-    public static String generate(Path filepath1, Path filepath2, Format format) throws Exception {
-        var map1 = Parser.parse(filepath1);
-        var map2 = Parser.parse(filepath2);
+    private static final String STYLISH = "stylish";
+    private static final String PLAIN = "plain";
+    private static final String JSON = "json";
+
+    public static String generate(String filePath1, String filePath2) throws Exception {
+        return generate(filePath1, filePath2, STYLISH);
+    }
+
+    public static String generate(String filepath1, String filepath2, String format) throws Exception {
+        var map1 = Parser.parse(getFullPath(filepath1));
+        var map2 = Parser.parse(getFullPath(filepath2));
 
         Set<String> allKeys = new LinkedHashSet<>(map1.keySet());
         allKeys.addAll(map2.keySet());
@@ -31,6 +40,7 @@ public class Differ {
             case STYLISH -> StylishFormatter.format(results);
             case PLAIN -> PlainFormatter.format(results);
             case JSON -> JsonFormatter.format(results);
+            default -> throw new IllegalStateException("Unexpected format: " + format);
         };
     }
 
@@ -51,4 +61,9 @@ public class Differ {
             return new DiffEntry(key, v2, null, CompareResult.ADDED);
         }
     }
+
+    private static Path getFullPath(String filePath) {
+        return Paths.get(filePath).toAbsolutePath().normalize();
+    }
+
 }
