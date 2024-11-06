@@ -1,5 +1,5 @@
 package hexlet.code;
 
 public enum Format {
-    STYLISH, PLAIN
+    STYLISH, PLAIN, JSON
 }
