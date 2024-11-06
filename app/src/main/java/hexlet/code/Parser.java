@@ -8,8 +8,8 @@ import java.nio.file.Path;
 import java.util.Map;
 
 public class Parser {
-    private static final ObjectMapper jsonMapper = new ObjectMapper();
-    private static final ObjectMapper yamlMapper = new YAMLMapper();
+    private static final ObjectMapper JSON_MAPPER = new ObjectMapper();
+    private static final ObjectMapper YAML_MAPPER = new YAMLMapper();
 
     public static Map parse(Path filepath) throws Exception {
         return switch (getExtension(filepath)) {
@@ -21,12 +21,12 @@ public class Parser {
 
     private static Map parseJson(Path filepath) throws Exception {
         String jsonSource = Files.readString(filepath);
-        return jsonMapper.readValue(jsonSource, Map.class);
+        return JSON_MAPPER.readValue(jsonSource, Map.class);
     }
 
     private static Map parseYaml(Path filepath) throws Exception {
         String yamlSource = Files.readString(filepath);
-        return yamlMapper.readValue(yamlSource, Map.class);
+        return YAML_MAPPER.readValue(yamlSource, Map.class);
     }
 
     private static String getExtension(Path path) {

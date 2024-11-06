@@ -7,8 +7,8 @@ public enum CompareResult {
 
     private final String value;
 
-    CompareResult(String value_) {
-        value = value_;
+    CompareResult(String newValue) {
+        value = newValue;
     }
 
     @Override

@@ -4,7 +4,12 @@ import hexlet.code.model.CompareResult;
 import hexlet.code.model.DiffEntry;
 
 import java.nio.file.Path;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 public class Differ {
     public static String generate(Path filepath1, Path filepath2) throws Exception {

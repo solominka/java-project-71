@@ -5,10 +5,10 @@ public class DiffEntry {
     private final Object value;
     private final CompareResult compareResult;
 
-    public DiffEntry(String key_, Object value_, CompareResult compareResult_) {
-        key = key_;
-        value = value_;
-        compareResult =  compareResult_;
+    public DiffEntry(String newKey, Object newValue, CompareResult newCompareResult) {
+        key = newKey;
+        value = newValue;
+        compareResult =  newCompareResult;
     }
 
     @Override

@@ -7,10 +7,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 class DifferTest {
-    private final ClassLoader classLoader = getClass().getClassLoader();
-
     @Test
-    void ShouldGenerateDiffForJsonFiles() throws Exception {
+    void shouldGenerateDiffForJsonFiles() throws Exception {
         ClassLoader classLoader = getClass().getClassLoader();
         var resp = Differ.generate(
                 Path.of(classLoader.getResource("input/json/file1.json").getPath()),
@@ -21,7 +19,8 @@ class DifferTest {
     }
 
     @Test
-    void ShouldGenerateDiffForComplicatedJsonFiles() throws Exception {
+    void shouldGenerateDiffForComplicatedJsonFiles() throws Exception {
+        ClassLoader classLoader = getClass().getClassLoader();
         var resp = Differ.generate(
                 Path.of(classLoader.getResource("input/object_values/file1.json").getPath()),
                 Path.of(classLoader.getResource("input/object_values/file2.json").getPath())
@@ -31,7 +30,8 @@ class DifferTest {
     }
 
     @Test
-    void ShouldGenerateDiffForYamlFiles() throws Exception {
+    void shouldGenerateDiffForYamlFiles() throws Exception {
+        ClassLoader classLoader = getClass().getClassLoader();
         var resp = Differ.generate(
                 Path.of(classLoader.getResource("input/yaml/file1.yml").getPath()),
                 Path.of(classLoader.getResource("input/yaml/file2.yml").getPath())
