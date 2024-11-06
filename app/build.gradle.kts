@@ -2,6 +2,8 @@ plugins {
     application
     checkstyle
     jacoco
+    kotlin("plugin.lombok") version "2.0.21"
+    id("io.freefair.lombok") version "8.10"
 }
 
 java {
@@ -24,6 +26,8 @@ dependencies {
     implementation("com.fasterxml.jackson.core:jackson-databind:2.13.4.2")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.18.0")
     annotationProcessor("info.picocli:picocli-codegen:4.7.6")
+    compileOnly("org.projectlombok:lombok:1.18.20")
+    annotationProcessor("org.projectlombok:lombok:1.18.20")
 }
 
 application {
