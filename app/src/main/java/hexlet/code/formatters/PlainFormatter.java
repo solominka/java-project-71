@@ -21,7 +21,8 @@ public class PlainFormatter {
     }
 
     private static String formatUpdatedDiffEntry(DiffEntry d) {
-        return String.format("Property '%s' was updated. From %s to %s\n", d.getKey(), formatValue(d.getOldValue()), formatValue(d.getValue()));
+        return String.format("Property '%s' was updated. From %s to %s\n", d.getKey(),
+                formatValue(d.getOldValue()), formatValue(d.getValue()));
     }
 
     private static String formatAddedDiffEntry(DiffEntry d) {
@@ -40,7 +41,7 @@ public class PlainFormatter {
             return "[complex value]";
         }
         if (v instanceof String) {
-            return "'" + v + "'";
+            return String.format("'%s'", v);
         }
 
         return v.toString();

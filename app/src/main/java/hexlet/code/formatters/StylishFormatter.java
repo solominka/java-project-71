@@ -22,8 +22,8 @@ public class StylishFormatter {
     }
 
     private static String formatUpdatedDiffEntry(DiffEntry d) {
-        return String.format("  - %s: %s\n", d.getKey(), d.getOldValue()) +
-                String.format("  + %s: %s\n", d.getKey(), d.getValue());
+        return String.format("  - %s: %s\n", d.getKey(), d.getOldValue())
+                + String.format("  + %s: %s\n", d.getKey(), d.getValue());
     }
 
     private static String formatAddedDiffEntry(DiffEntry d) {
