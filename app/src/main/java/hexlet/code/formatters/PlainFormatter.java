@@ -25,11 +25,11 @@ public class PlainFormatter {
 
     private static String formatUpdatedDiffEntry(DiffEntry d) {
         return String.format("Property '%s' was updated. From %s to %s", d.getKey(),
-                formatValue(d.getOldValue()), formatValue(d.getValue()));
+                formatValue(d.getValue1()), formatValue(d.getValue2()));
     }
 
     private static String formatAddedDiffEntry(DiffEntry d) {
-        return String.format("Property '%s' was added with value: %s", d.getKey(), formatValue(d.getValue()));
+        return String.format("Property '%s' was added with value: %s", d.getKey(), formatValue(d.getValue2()));
     }
 
     private static String formatRemovedDiffEntry(DiffEntry d) {

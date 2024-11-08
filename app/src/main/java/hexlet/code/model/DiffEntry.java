@@ -7,7 +7,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class DiffEntry {
     private String key;
-    private Object value;
-    private Object oldValue;
+    private Object value2;
+    private Object value1;
     private CompareResult compareResult;
 }

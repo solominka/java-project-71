@@ -3,40 +3,25 @@ package hexlet.code;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Map;
 
 public class Parser {
     private static final ObjectMapper JSON_MAPPER = new ObjectMapper();
     private static final ObjectMapper YAML_MAPPER = new YAMLMapper();
 
-    public static Map parse(Path filepath) throws Exception {
-        return switch (getExtension(filepath)) {
-            case "json" -> parseJson(filepath);
-            case "yml" -> parseYaml(filepath);
-            default -> throw new IllegalArgumentException("unsupported file extension: " + getExtension(filepath));
+    public static Map parse(String data, String extension) throws Exception {
+        return switch (extension) {
+            case "json" -> parseJson(data);
+            case "yml" -> parseYaml(data);
+            default -> throw new IllegalArgumentException("unsupported file extension: " + extension);
         };
     }
 
-    private static Map parseJson(Path filepath) throws Exception {
-        String jsonSource = Files.readString(filepath);
-        return JSON_MAPPER.readValue(jsonSource, Map.class);
+    private static Map parseJson(String data) throws Exception {
+        return JSON_MAPPER.readValue(data, Map.class);
     }
 
-    private static Map parseYaml(Path filepath) throws Exception {
-        String yamlSource = Files.readString(filepath);
-        return YAML_MAPPER.readValue(yamlSource, Map.class);
-    }
-
-    private static String getExtension(Path path) {
-        String fileName = path.getFileName().toString();
-        int dotIndex = fileName.lastIndexOf('.');
-
-        if (dotIndex == -1 || dotIndex == fileName.length() - 1) {
-            return "";
-        } else {
-            return fileName.substring(dotIndex + 1);
-        }
+    private static Map parseYaml(String data) throws Exception {
+        return YAML_MAPPER.readValue(data, Map.class);
     }
 }

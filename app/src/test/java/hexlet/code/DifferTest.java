@@ -1,57 +1,52 @@
 package hexlet.code;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 class DifferTest {
-    @Test
-    void shouldGenerateDiffForJsonFiles() throws Exception {
+    @ParameterizedTest
+    @CsvSource({
+        "input/yaml/file1.yml,input/yaml/file2.yml,stylish,output/stylish_correct.txt",
+        "input/json/file1.json,input/json/file2.json,stylish,output/stylish_correct.txt",
+        "input/yaml/file1.yml,input/yaml/file2.yml,plain,output/plain_correct.txt",
+        "input/json/file1.json,input/json/file2.json,plain,output/plain_correct.txt",
+        "input/yaml/file1.yml,input/yaml/file2.yml,json,output/json_correct.json",
+        "input/json/file1.json,input/json/file2.json,json,output/json_correct.json",
+    })
+    void shouldGenerateDiffByGivenFormatWithGivenFiles(
+            String file1, String file2, String format, String correctPath
+    ) throws Exception {
         ClassLoader classLoader = getClass().getClassLoader();
         var resp = Differ.generate(
-                classLoader.getResource("input/json/file1.json").getPath(),
-                classLoader.getResource("input/json/file2.json").getPath(),
-                "stylish"
+                getResourcePath(file1),
+                getResourcePath(file2),
+                format
         );
-        var correct = Files.readString(Path.of(classLoader.getResource("output/stylish_correct.txt").getPath()));
+        var correct = Files.readString(Path.of(classLoader.getResource(correctPath).getPath()));
         Assertions.assertEquals(correct, resp);
     }
 
-    @Test
-    void shouldGenerateDiffForYamlFiles() throws Exception {
+    @ParameterizedTest
+    @CsvSource({
+        "input/yaml/file1.yml,input/yaml/file2.yml,output/stylish_correct.txt",
+        "input/json/file1.json,input/json/file2.json,output/stylish_correct.txt",
+    })
+    void shouldGenerateDiffWithDefaultFormat(String file1, String file2, String correctPath) throws Exception {
         ClassLoader classLoader = getClass().getClassLoader();
         var resp = Differ.generate(
-                classLoader.getResource("input/yaml/file1.yml").getPath(),
-                classLoader.getResource("input/yaml/file2.yml").getPath(),
-                "stylish"
+                getResourcePath(file1),
+                getResourcePath(file2)
         );
-        var correct = Files.readString(Path.of(classLoader.getResource("output/stylish_correct.txt").getPath()));
+        var correct = Files.readString(Path.of(classLoader.getResource(correctPath).getPath()));
         Assertions.assertEquals(correct, resp);
     }
 
-    @Test
-    void shouldGeneratePlainDiff() throws Exception {
+    private String getResourcePath(String path) {
         ClassLoader classLoader = getClass().getClassLoader();
-        var resp = Differ.generate(
-                classLoader.getResource("input/yaml/file1.yml").getPath(),
-                classLoader.getResource("input/yaml/file2.yml").getPath(),
-                "plain"
-        );
-        var correct = Files.readString(Path.of(classLoader.getResource("output/plain_correct.txt").getPath()));
-        Assertions.assertEquals(correct, resp);
-    }
-
-    @Test
-    void shouldGenerateJsonDiff() throws Exception {
-        ClassLoader classLoader = getClass().getClassLoader();
-        var resp = Differ.generate(
-                classLoader.getResource("input/yaml/file1.yml").getPath(),
-                classLoader.getResource("input/yaml/file2.yml").getPath(),
-                "json"
-        );
-        var correct = Files.readString(Path.of(classLoader.getResource("output/json_correct.json").getPath()));
-        Assertions.assertEquals(correct, resp);
+        return classLoader.getResource(path).getPath();
     }
 }

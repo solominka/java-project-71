@@ -22,19 +22,19 @@ public class StylishFormatter {
     }
 
     private static String formatUpdatedDiffEntry(DiffEntry d) {
-        return String.format("  - %s: %s\n", d.getKey(), d.getOldValue())
-                + String.format("  + %s: %s\n", d.getKey(), d.getValue());
+        return String.format("  - %s: %s\n", d.getKey(), d.getValue1())
+                + String.format("  + %s: %s\n", d.getKey(), d.getValue2());
     }
 
     private static String formatAddedDiffEntry(DiffEntry d) {
-        return String.format("  + %s: %s\n", d.getKey(), d.getValue());
+        return String.format("  + %s: %s\n", d.getKey(), d.getValue2());
     }
 
     private static String formatRemovedDiffEntry(DiffEntry d) {
-        return String.format("  - %s: %s\n", d.getKey(), d.getOldValue());
+        return String.format("  - %s: %s\n", d.getKey(), d.getValue1());
     }
 
     private static String formatEqualsDiffEntry(DiffEntry d) {
-        return String.format("    %s: %s\n", d.getKey(), d.getValue());
+        return String.format("    %s: %s\n", d.getKey(), d.getValue2());
     }
 }
